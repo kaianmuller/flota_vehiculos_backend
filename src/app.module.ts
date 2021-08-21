@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AutoModule } from './auto/auto.module';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,7 +16,8 @@ import { AutoModule } from './auto/auto.module';
     entities: ["dist/**/*.entity{.ts,.js}"],
     synchronize: true,
   }),
-  AutoModule
+  AutoModule,
+  UsuarioModule
   ],
   controllers: [AppController],
   providers: [AppService],
