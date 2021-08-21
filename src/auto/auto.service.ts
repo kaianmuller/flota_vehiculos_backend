@@ -16,7 +16,7 @@ export class AutoService {
 
 
         async getAll(){
-            return await this.repository.find(/*{join: { alias: 'auto',  leftJoinAndSelect: { servicios: 'auto.servicios' } }}*/);
+            return await this.repository.find({join: { alias: 'auto',  leftJoinAndSelect: { servicios: 'auto.servicios' } }});
         }
 
         async getOne(id:number){

@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsArray, IsEnum, IsString } from "class-validator";
 import { TipoUsuario } from "src/enums/tipo-usuario.enum";
+import { Servicio } from "src/servicio/servicio.entity";
 import { Column } from "typeorm";
 
 
@@ -36,7 +37,7 @@ export class UsuarioDto{
     @ApiProperty()
     tipoUsuario:TipoUsuario;
 
-   /* @IsArray()
-    servicios: Array<Servicio>*/
+   @IsArray()
+    servicios: Array<Servicio>
 
 }

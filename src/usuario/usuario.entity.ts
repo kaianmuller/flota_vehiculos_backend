@@ -1,4 +1,5 @@
 import { TipoUsuario } from "src/enums/tipo-usuario.enum";
+import { Servicio } from "src/servicio/servicio.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
@@ -29,6 +30,6 @@ export class Usuario{
     @Column()
     tipoUsuario:TipoUsuario;
 
-   /* @OneToMany(() => Servicio, servicio => servicio.usuario,{ cascade: true })
-     servicios: Array<Servicio>;*/
+    @OneToMany(() => Servicio, servicio => servicio.usuario,{ cascade: true })
+     servicios: Array<Servicio>;
 }

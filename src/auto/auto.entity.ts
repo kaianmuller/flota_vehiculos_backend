@@ -1,4 +1,5 @@
 
+import { Servicio } from "src/servicio/servicio.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
@@ -41,8 +42,8 @@ export class Auto{
      @Column()
      descripcion:string;
 
-    /* @OneToMany(() => Servicio, servicio => servicio.auto,{ cascade: true })
-     servicios: Array<Servicio>;*/
+    @OneToMany(() => Servicio, servicio => servicio.auto,{ cascade: true })
+     servicios: Array<Servicio>;
 
 
 }

@@ -17,7 +17,7 @@ export class UsuarioService {
 
 
     async getAll(){
-        return await this.repository.find(/*{join: { alias: 'usuario',  leftJoinAndSelect: { servicios: 'usuario.servicios' } }}*/);
+        return await this.repository.find({join: { alias: 'usuario',  leftJoinAndSelect: { servicios: 'usuario.servicios' } }});
     }
 
     async getOne(id:number){

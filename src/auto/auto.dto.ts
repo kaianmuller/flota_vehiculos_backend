@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsArray, IsNumber, IsString } from "class-validator";
+import { Servicio } from "src/servicio/servicio.entity";
 import { Column } from "typeorm";
 
 
@@ -52,8 +53,8 @@ export class AutoDto {
     @ApiProperty()
     descripcion:string;
 
-    /*@IsArray()
-    servicios:Array<Servicio>*/
+    @IsArray()
+    servicios:Array<Servicio>
 
 
 }
