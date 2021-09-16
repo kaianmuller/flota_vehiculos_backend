@@ -1,41 +1,18 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
+import { ControllerGeneric } from 'src/shared/generic/ControllerGeneric';
 import { AutoDto } from './auto.dto';
+import { Auto } from './auto.entity';
 import { AutoService } from './auto.service';
 
 @Controller('auto')
-export class AutoController {
+export class AutoController extends ControllerGeneric<Auto,AutoDto> {
 
-constructor(private readonly autoService:AutoService){}
-
-@Get()
-async getAll() {
-    return await this.autoService.getAll();
+constructor(private readonly autoService:AutoService){
+    super(autoService);
 }
 
 
-@Get(':id')
-async getOne(@Param('id') id:number){
-    return await this.autoService.getOne(id);
-}
-
-
-@Post()
-@ApiBody({type: AutoDto})
-async createOne(@Body() dto:AutoDto){
-    return await this.autoService.createOne(dto);
-}
-
-@Put(':id')
-async editOne(@Param('id') id:number,@Body() dto:AutoDto){
-    return await this.autoService.editOne(id,dto);
-}
-
-
-@Delete(':id')
-async deleteOne(@Param('id') id:number){
-    return await this.autoService.deleteOne(id); 
-}
 
 
 

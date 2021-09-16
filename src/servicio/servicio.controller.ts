@@ -1,42 +1,19 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
+import { ControllerGeneric } from 'src/shared/generic/ControllerGeneric';
 import { ServicioDto } from './servicio.dto';
+import { Servicio } from './servicio.entity';
 import { ServicioService } from './servicio.service';
 
 @Controller('servicio')
-export class ServicioController {
+export class ServicioController extends ControllerGeneric<Servicio,ServicioDto>{
 
 
-constructor(private readonly servicioService:ServicioService){}
-
-
-@Get()
-async getAll() {
-    return await this.servicioService.getAll();
+constructor(private readonly servicioService:ServicioService){
+    super(servicioService);
 }
 
 
-@Get(':id')
-async getOne(@Param('id') id:number){
-    return await this.servicioService.getOne(id);
-}
 
-
-@Post()
-@ApiBody({type: ServicioDto})
-async createOne(@Body() dto:ServicioDto){
-    return await this.servicioService.createOne(dto);
-}
-
-@Put(':id')
-async editOne(@Param('id') id:number,@Body() dto:ServicioDto){
-    return await this.servicioService.editOne(id,dto);
-}
-
-
-@Delete(':id')
-async deleteOne(@Param('id') id:number){
-    return await this.servicioService.deleteOne(id); 
-}
 
 }

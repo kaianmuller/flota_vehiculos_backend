@@ -1,41 +1,18 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiBody } from '@nestjs/swagger';
+import { ControllerGeneric } from 'src/shared/generic/ControllerGeneric';
 import { UsuarioDto } from './usuario.dto';
+import { Usuario } from './usuario.entity';
 import { UsuarioService } from './usuario.service';
 
 @Controller('usuario')
-export class UsuarioController {
+export class UsuarioController extends ControllerGeneric<Usuario,UsuarioDto> {
 
 
-constructor(private readonly usuarioService :UsuarioService){}
-
-@Get()
-async getAll() {
-    return await this.usuarioService.getAll();
+constructor(private readonly usuarioService:UsuarioService){
+    super(usuarioService);
 }
 
 
-@Get(':id')
-async getOne(@Param('id') id:number){
-    return await this.usuarioService.getOne(id);
-}
-
-
-@Post()
-@ApiBody({type: UsuarioDto})
-async createOne(@Body() dto:UsuarioDto){
-    return await this.usuarioService.createOne(dto);
-}
-
-@Put(':id')
-async editOne(@Param('id') id:number,@Body() dto:UsuarioDto){
-    return await this.usuarioService.editOne(id,dto);
-}
-
-
-@Delete(':id')
-async deleteOne(@Param('id') id:number){
-    return await this.usuarioService.deleteOne(id); 
-}
 
 }

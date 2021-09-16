@@ -1,45 +1,29 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Interval } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
+import { interval } from 'rxjs';
+import { ServiceGeneric } from 'src/shared/generic/ServiceGeneric';
 import { Repository } from 'typeorm';
 import { ServicioDto } from './servicio.dto';
 import { Servicio } from './servicio.entity';
 
 @Injectable()
-export class ServicioService {
+export class ServicioService extends ServiceGeneric<Servicio,ServicioDto>{
 
 
     constructor(
         @InjectRepository(Servicio)
-        private readonly repository:Repository<Servicio>
-    ){}
+        readonly repository:Repository<Servicio>
+    ){
+        super(repository);
+    }
 
 
     async getAll(){
         return await this.repository.find({join: { alias: 'servicio',  leftJoinAndSelect: { usuario: 'servicio.usuario', auto: 'servicio.auto' }, }});
     }
 
-    async getOne(id:number){
-        const servicio =  await this.repository.findOne(id);
-        if (!servicio) throw new NotFoundException('Servicio no existe');
-        return servicio;
-    }
 
-    async createOne(dto:ServicioDto){
-        const servicio = this.repository.create(dto);
-        return await this.repository.save(servicio);
-    }
-
-    async editOne(id:number,dto: ServicioDto){
-        const servicio = await this.repository.findOne(id);
-        if (!servicio) throw new NotFoundException('Servicio no existe!');
-        const editedServicio = Object.assign(servicio, dto);
-         return await this.repository.save(editedServicio);
-
-    }
-
-    async deleteOne(id:number){
-        return await this.repository.delete(id);
-    }
 
 
 }
