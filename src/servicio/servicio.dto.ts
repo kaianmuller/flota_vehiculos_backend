@@ -1,38 +1,17 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Type } from "class-transformer";
 import { IsEnum, IsNumber, IsString } from "class-validator";
 import { Auto } from "src/auto/auto.entity";
-import { TipoServicio } from "src/enums/tipo-servicio.enum";
+import { DtoGeneric } from "src/shared/generic/DtoGeneric";
 import { Usuario } from "src/usuario/usuario.entity";
 
 
 
 
-export class ServicioDto{
+export class ServicioDto extends DtoGeneric{
 
-    @IsString()
-    @ApiProperty()
-    descripcion:string;
 
-    @IsEnum(TipoServicio)
     @ApiProperty()
-    tipoServicio:TipoServicio;
-
-    @IsNumber()
-    @ApiProperty()
-    valorServicio:number;
-
-    @Type(()=>Date)
-    @ApiProperty()
-    fechaServicio:Date;
-
-    @IsNumber()
-    @ApiProperty()
-    kmInicial:number;
-
-    @IsNumber()
-    @ApiProperty()
-    kmFinal:number;
+    tipoServicio:string;
 
     @ApiProperty()
     usuario:Usuario;

@@ -11,6 +11,9 @@ export class AuthService {
 
 async validarUsuario(login:string,contrasena:string){
     const usuario = await this.usuarioServ.getUsuarioByLogin(login);
+    if(!usuario){
+        return false;
+    }
     return await usuario.validarPassword(contrasena);
 }
 

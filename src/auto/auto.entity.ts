@@ -1,22 +1,15 @@
 
+import { DisponibilidadAuto } from "src/enums/disponibilidad-auto.enum";
 import { Servicio } from "src/servicio/servicio.entity";
+import { EntityGeneric } from "src/shared/generic/EntityGeneric";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
 
 @Entity()
-export class Auto{
+export class Auto extends EntityGeneric{
 
-
-    @PrimaryGeneratedColumn()
-     id:number;
-
-     @Column()
-     dataCreacion:Date;
-
-     @Column()
-     dataAlteracion:Date;
 
      @Column()
      chapa:string;
@@ -40,7 +33,7 @@ export class Auto{
      anoFabricacion:number;
 
      @Column()
-     descripcion:string;
+     disponibilidad:DisponibilidadAuto;
 
     @OneToMany(() => Servicio, servicio => servicio.auto,{ cascade: true })
      servicios: Array<Servicio>;

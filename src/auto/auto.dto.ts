@@ -1,7 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsArray, IsNumber, IsString } from "class-validator";
+import { IsArray, IsEnum, IsNumber, IsString } from "class-validator";
+import { DisponibilidadAuto } from "src/enums/disponibilidad-auto.enum";
 import { Servicio } from "src/servicio/servicio.entity";
+import { DtoGeneric } from "src/shared/generic/DtoGeneric";
 import { Column } from "typeorm";
 
 
@@ -10,19 +12,11 @@ import { Column } from "typeorm";
 
 
 
-export class AutoDto {
+export class AutoDto extends DtoGeneric{
 
-    @Type(() => Date)
-    @ApiProperty()
-    dataCreacion:Date;
-
-
-    @Type(() => Date)
-    @ApiProperty()
-    dataAlteracion:Date;
 
     @IsString()
-    @ApiProperty()
+    @ApiProperty({type:String,description:'chapa'})
     chapa:string;
 
     @IsString()
@@ -49,9 +43,9 @@ export class AutoDto {
     @ApiProperty()
     anoFabricacion:number;
 
-    @IsString()
+    @IsEnum(DisponibilidadAuto)
     @ApiProperty()
-    descripcion:string;
+    disponibilidad:DisponibilidadAuto;
 
     @IsArray()
     servicios:Array<Servicio>

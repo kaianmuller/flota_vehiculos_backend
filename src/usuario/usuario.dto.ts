@@ -3,22 +3,15 @@ import { Type } from "class-transformer";
 import { IsArray, IsEnum, IsString } from "class-validator";
 import { TipoUsuario } from "src/enums/tipo-usuario.enum";
 import { Servicio } from "src/servicio/servicio.entity";
+import { DtoGeneric } from "src/shared/generic/DtoGeneric";
 import { Column } from "typeorm";
 
 
 
 
 
-export class UsuarioDto{
+export class UsuarioDto extends DtoGeneric{
 
-    @Type(() => Date)
-    @ApiProperty()
-    dataCreacion:Date;
-
-
-    @Type(() => Date)
-    @ApiProperty()
-    dataAlteracion:Date;
 
 
     @IsString()

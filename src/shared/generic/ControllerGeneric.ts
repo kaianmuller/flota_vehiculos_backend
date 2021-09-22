@@ -1,17 +1,14 @@
 import { Body, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { ApiBearerAuth, ApiBody } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody} from "@nestjs/swagger";
 import { Repository } from "typeorm";
 
 
 
 
 export class ControllerGeneric<E,EDto>{
-    
-
 
 constructor(readonly service:any){
-
 }
 
 
@@ -29,8 +26,7 @@ async getOne(@Param('id') id:number){
     return await this.service.getOne(id);
 }
 
-@ApiBearerAuth()
-@UseGuards(AuthGuard('jwt'))
+
 @Post()
 async createOne(@Body() dto:EDto){
     return await this.service.createOne(dto);

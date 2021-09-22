@@ -1,4 +1,5 @@
 import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './login.dto';
 
@@ -10,6 +11,7 @@ export class AuthController {
 
 
 @Post()
+@ApiBody({type:LoginDto})
 async login(@Body() loginDto:LoginDto){
     const {login,contrasena} = loginDto;
     const valido = await this.authServ.validarUsuario(login,contrasena);

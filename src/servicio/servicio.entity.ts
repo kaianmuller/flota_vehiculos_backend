@@ -1,40 +1,28 @@
 import { Auto } from "src/auto/auto.entity";
-import { TipoServicio } from "src/enums/tipo-servicio.enum";
+import { Movimiento } from "src/movimiento/movimiento.entity";
+import { EntityGeneric } from "src/shared/generic/EntityGeneric";
+import { TipoServicio } from "src/tipo-servicio/tipo-servicio.entity";
 import { Usuario } from "src/usuario/usuario.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
 
 @Entity()
-export class Servicio{
+export class Servicio extends EntityGeneric{
 
-    @PrimaryGeneratedColumn()
-    id:number;
 
-    @Column()
-    descripcion:string;
-
-    @Column()
-    tipoServicio:TipoServicio;
-
-    @Column()
-    valorServicio:number;
-
-    @Column()
-    fechaServicio:Date;
-
-    @Column()
-    kmInicial:number;
-
-    @Column()
-    kmFinal:number;
+    @ManyToOne(type => TipoServicio, tipoServicio => tipoServicio.servicios)
+    tipoServicio:string;
 
     @ManyToOne(type => Usuario, usuario => usuario.servicios)
-    usuario:Usuario;
+    usuarioCreador:Usuario;
 
     @ManyToOne(type => Auto, auto => auto.servicios)
     auto:Auto;
+
+    @OneToMany(()=>Movimiento,movimiento=>movimiento.servicio,{cascade:true})
+    movimientos:Array<Movimiento>
 
     
 }

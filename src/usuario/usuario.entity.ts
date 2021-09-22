@@ -2,36 +2,35 @@ import { TipoUsuario } from "src/enums/tipo-usuario.enum";
 import { Servicio } from "src/servicio/servicio.entity";
 import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from "bcrypt";
+import { EntityGeneric } from "src/shared/generic/EntityGeneric";
+import { Movimiento } from "src/movimiento/movimiento.entity";
 
 
 
 @Entity()
-export class Usuario{
+export class Usuario extends EntityGeneric{
 
-    
-    @PrimaryGeneratedColumn()
-    id:number;
 
-    @Column()
-    dataCreacion:Date;
-
-    @Column()
-    dataAlteracion:Date;
 
     @Column()
     nombre:string;
 
-    @Column()
-    tipoUsuario:TipoUsuario;
-
-    @OneToMany(() => Servicio, servicio => servicio.usuario,{ cascade: true })
-     servicios: Array<Servicio>;
-
      @Column({unique: true})
      login:string;
  
-     @Column({length: 70, nullable: true })
+     
+     @Column({length: 70, nullable: true})
      contrasena:string;
+     
+    @Column()
+    tipoUsuario:TipoUsuario;
+
+    
+    @OneToMany(() => Servicio, servicio => servicio.usuarioCreador,{ cascade: true })
+     servicios: Array<Servicio>;
+
+     @OneToMany(() => Movimiento, movimiento => movimiento.usuario,{ cascade: true })
+     movimientos: Array<Movimiento>;
 
      @BeforeInsert()
      async hashPassword(){

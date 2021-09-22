@@ -8,6 +8,8 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
+import { MovimientoModule } from './movimiento/movimiento.module';
+import { TipoServicioModule } from './tipo-servicio/tipo-servicio.module';
 
 @Module({
   imports: [
@@ -28,6 +30,8 @@ import { PassportModule } from '@nestjs/passport';
   UsuarioModule,
   ServicioModule,
   AuthModule,
+  MovimientoModule,
+  TipoServicioModule,
   ],
   controllers: [AppController],
   providers: [AppService],

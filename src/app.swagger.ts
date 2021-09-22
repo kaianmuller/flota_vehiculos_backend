@@ -4,9 +4,9 @@ import { INestApplication } from '@nestjs/common';
 
 export const initSwagger = (app: INestApplication) => {
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Usuarios API')
+    .setTitle('Flota de Vehiculos API')
     .setDescription(
-      'Operaciones con Usuarios',
+      'Operaciones con Flota de Vehiculos.',
     )
     .build();
 
