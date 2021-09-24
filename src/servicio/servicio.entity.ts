@@ -1,4 +1,5 @@
 
+import { Agendamiento } from "src/agendamiento/agendamiento.entity";
 import { Auto } from "src/auto/auto.entity";
 import { Movimiento } from "src/movimiento/movimiento.entity";
 import { EntityGeneric } from "src/shared/generic/EntityGeneric";
@@ -24,6 +25,9 @@ export class Servicio extends EntityGeneric{
 
     @OneToMany(type =>Movimiento,movimiento=>movimiento.servicio,{cascade:true})
     movimientos:Array<Movimiento>
+
+    @OneToOne(type => Agendamiento,agendamiento => agendamiento.servicio,{cascade:true})
+    agendamiento:Agendamiento;
 
     
 }

@@ -22,7 +22,7 @@ tipoPeriodo:TipoPeriodoAgendamiento;
 @Column({nullable:true})
 periodo:number;
 
-@OneToOne(type => Servicio)
+@OneToOne(type => Servicio,servicio => servicio.agendamiento)
 @JoinColumn()
 servicio:Servicio;
 
