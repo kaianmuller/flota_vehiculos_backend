@@ -1,14 +1,15 @@
-import { Body, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Delete, Get, Param, Post, Put, Type, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiBearerAuth, ApiBody} from "@nestjs/swagger";
-import { Repository } from "typeorm";
 
 
 
 
 export class ControllerGeneric<E,EDto>{
 
+
 constructor(readonly service:any){
+   
 }
 
 
@@ -47,4 +48,8 @@ async editOne(@Param('id') id:number,@Body() dto:EDto){
 async deleteOne(@Param('id') id:number){
     return await this.service.deleteOne(id); 
 }
+
+
 }
+
+

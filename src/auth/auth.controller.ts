@@ -11,7 +11,6 @@ export class AuthController {
 
 
 @Post()
-@ApiBody({type:LoginDto})
 async login(@Body() loginDto:LoginDto){
     const {login,contrasena} = loginDto;
     const valido = await this.authServ.validarUsuario(login,contrasena);

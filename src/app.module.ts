@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { MovimientoModule } from './movimiento/movimiento.module';
 import { TipoServicioModule } from './tipo-servicio/tipo-servicio.module';
+import { AgendamientoModule } from './agendamiento/agendamiento.module';
 
 @Module({
   imports: [
@@ -23,8 +24,11 @@ import { TipoServicioModule } from './tipo-servicio/tipo-servicio.module';
     username: 'postgres',
     password: 'pg1996',
     database: 'fautos',
-    entities: ["dist/**/*.entity{.ts,.js}"],
+    entities: ['dist/**/*.entity{.ts,.js}'],
+    autoLoadEntities: true,
     synchronize: true,
+    logging: true,
+    logger: 'file',
   }),
   AutoModule,
   UsuarioModule,
@@ -32,6 +36,7 @@ import { TipoServicioModule } from './tipo-servicio/tipo-servicio.module';
   AuthModule,
   MovimientoModule,
   TipoServicioModule,
+  AgendamientoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

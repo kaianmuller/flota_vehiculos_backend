@@ -8,7 +8,6 @@ import { UsuarioService } from './usuario.service';
 @Controller('usuario')
 export class UsuarioController extends ControllerGeneric<Usuario,UsuarioDto> {
 
-
 constructor(private readonly usuarioService:UsuarioService){
     super(usuarioService);
 }

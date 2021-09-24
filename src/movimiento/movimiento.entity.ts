@@ -28,10 +28,10 @@ export class Movimiento extends EntityGeneric{
     estado:EstadoMovimientos;
 
 
-    @ManyToOne(()=> Servicio, servicio => servicio.movimientos)
+    @ManyToOne(type => Servicio, servicio => servicio.movimientos)
     servicio:Servicio;
 
-    @ManyToOne(()=> Usuario, usuario => usuario.movimientos)
+    @ManyToOne(type => Usuario, usuario => usuario.movimientos)
     usuario:Usuario;
 
 }

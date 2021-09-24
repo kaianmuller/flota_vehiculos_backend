@@ -26,10 +26,10 @@ export class Usuario extends EntityGeneric{
     tipoUsuario:TipoUsuario;
 
     
-    @OneToMany(() => Servicio, servicio => servicio.usuarioCreador,{ cascade: true })
+    @OneToMany(type => Servicio, servicio => servicio.usuarioCreador,{ cascade: true })
      servicios: Array<Servicio>;
 
-     @OneToMany(() => Movimiento, movimiento => movimiento.usuario,{ cascade: true })
+     @OneToMany(type => Movimiento, movimiento => movimiento.usuario,{ cascade: true })
      movimientos: Array<Movimiento>;
 
      @BeforeInsert()

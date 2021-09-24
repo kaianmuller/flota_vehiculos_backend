@@ -35,7 +35,7 @@ export class Auto extends EntityGeneric{
      @Column()
      disponibilidad:DisponibilidadAuto;
 
-    @OneToMany(() => Servicio, servicio => servicio.auto,{ cascade: true })
+    @OneToMany(type => Servicio, servicio => servicio.auto,{ cascade: true })
      servicios: Array<Servicio>;
 
 
