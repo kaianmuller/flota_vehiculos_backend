@@ -2,15 +2,14 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AutoModule } from './auto/auto.module';
-import { ServicioModule } from './servicio/servicio.module';
-import { UsuarioModule } from './usuario/usuario.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { PassportModule } from '@nestjs/passport';
-import { MovimientoModule } from './movimiento/movimiento.module';
-import { TipoServicioModule } from './tipo-servicio/tipo-servicio.module';
-import { AgendamientoModule } from './agendamiento/agendamiento.module';
+import { AutosModule } from './autos/autos.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { ServiciosModule } from './servicios/servicios.module';
+import { MovimientosModule } from './movimientos/movimientos.module';
+import { TiposServicioModule } from './tipos-servicio/tipos-servicio.module';
+import { AgendamientosModule } from './agendamientos/agendamientos.module';
 
 @Module({
   imports: [
@@ -30,13 +29,13 @@ import { AgendamientoModule } from './agendamiento/agendamiento.module';
     logging: true,
     logger: 'file',
   }),
-  AutoModule,
-  UsuarioModule,
-  ServicioModule,
+  AutosModule,
+  UsuariosModule,
+  ServiciosModule,
   AuthModule,
-  MovimientoModule,
-  TipoServicioModule,
-  AgendamientoModule,
+  MovimientosModule,
+  TiposServicioModule,
+  AgendamientosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

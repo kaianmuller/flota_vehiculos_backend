@@ -8,6 +8,7 @@ export const initSwagger = (app: INestApplication) => {
     .setDescription(
       'Operaciones con Flota de Vehiculos.',
     )
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
