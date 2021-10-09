@@ -19,7 +19,7 @@ export class AutosService extends ServiceGeneric<Autos,AutosDto>{
 
 
         async getAll(){
-            return await this.repository.find({join: { alias: 'autos',  leftJoinAndSelect: { servicios: 'autos.servicios' } }});
+            return await this.repository.find({join: { alias: 'autos',  leftJoinAndSelect: { movimientos: 'autos.movimientos' } }});
         }
 
 

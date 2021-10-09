@@ -9,13 +9,10 @@ import { TiposServicio } from './tipos-servicio.entity';
 export class TiposServicioService extends ServiceGeneric<TiposServicio,TiposServicioDto>{
 
     constructor(
-        @InjectRepository(TiposServicio) repository:Repository<TiposServicio>
+        @InjectRepository(TiposServicio) readonly repository:Repository<TiposServicio>
     ){
         super(repository);
     }
 
-    
-    async getAll(){
-        return await this.repository.find();
-    }
+
 }

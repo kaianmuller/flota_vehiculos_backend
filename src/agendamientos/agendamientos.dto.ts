@@ -29,7 +29,4 @@ tipo_periodo:TipoPeriodoAgendamiento;
 @IsNumber()
 periodo:number;
 
-@ApiProperty({type:ServiciosDto})
-servicio:Servicios;
-
 }

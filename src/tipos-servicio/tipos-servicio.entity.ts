@@ -1,19 +1,21 @@
 
+import { Agendamientos } from "src/agendamientos/agendamientos.entity";
 import { Servicios } from "src/servicios/servicios.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { EntityGeneric } from "src/shared/generic/EntityGeneric.entity";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+
+
 
 
 @Entity()
-export class TiposServicio{
+export class TiposServicio extends EntityGeneric{
 
 
-    @PrimaryGeneratedColumn()
-    id:number;
+    @OneToOne(type => Servicios,servicio => servicio.tipo_servicio,{cascade:true})
+    servicios:Array<Servicios>;
 
-    @Column()
-    descripcion:string;
+    @OneToOne(type => Agendamientos,agendamiento => agendamiento.tipo_servicio,{cascade:true})
+    agendamientos:Array<Agendamientos>;
 
-
-    @OneToMany(() => Servicios, servicio => servicio.tipo_servicio,{ cascade: true })
-    servicios: Array<Servicios>;
+    
 }

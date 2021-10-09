@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { TiposServicioController } from './tipos-servicio.controller';
-import { TiposServicio } from './tipos-servicio.entity';
 import { TiposServicioService } from './tipos-servicio.service';
+import { TiposServicioController } from './tipos-servicio.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TiposServicio } from './tipos-servicio.entity';
 
 @Module({
   imports:[TypeOrmModule.forFeature([TiposServicio])],
-  controllers: [TiposServicioController],
-  providers: [TiposServicioService]
+  providers: [TiposServicioService],
+  controllers: [TiposServicioController]
 })
 export class TiposServicioModule {}

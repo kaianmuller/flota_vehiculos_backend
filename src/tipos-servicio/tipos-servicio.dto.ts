@@ -1,14 +1,11 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString } from "class-validator";
 
-export class TiposServicioDto{
+import { DtoGeneric } from "src/shared/generic/DtoGeneric.dto";
 
-    @ApiProperty()
-    @IsNumber()
-    id:number;
 
-    @ApiProperty()
-    @IsString()
-    descripcion:string;
-    
+
+
+
+export class TiposServicioDto extends DtoGeneric{
+
+
 }

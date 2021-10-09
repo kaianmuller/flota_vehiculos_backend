@@ -7,8 +7,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AutosModule } from './autos/autos.module';
 import { UsuariosModule } from './usuarios/usuarios.module';
 import { ServiciosModule } from './servicios/servicios.module';
-import { MovimientosModule } from './movimientos/movimientos.module';
-import { TiposServicioModule } from './tipos-servicio/tipos-servicio.module';
 import { AgendamientosModule } from './agendamientos/agendamientos.module';
 
 @Module({
@@ -33,8 +31,6 @@ import { AgendamientosModule } from './agendamientos/agendamientos.module';
   UsuariosModule,
   ServiciosModule,
   AuthModule,
-  MovimientosModule,
-  TiposServicioModule,
   AgendamientosModule,
   ],
   controllers: [AppController],

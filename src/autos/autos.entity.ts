@@ -1,5 +1,5 @@
 
-import { ApiProperty } from "@nestjs/swagger";
+import { Agendamientos } from "src/agendamientos/agendamientos.entity";
 import { DisponibilidadAuto } from "src/enums/disponibilidad-auto.enum";
 import { Servicios } from "src/servicios/servicios.entity";
 import { EntityGeneric } from "src/shared/generic/EntityGeneric.entity";
@@ -37,6 +37,9 @@ export class Autos extends EntityGeneric{
 
     @OneToMany(type => Servicios, servicio => servicio.auto,{ cascade: true })
      servicios: Array<Servicios>;
+
+     @OneToMany(type => Agendamientos,agendamiento => agendamiento.auto,{cascade:true})
+     agendamientos:Array<Agendamientos>
 
 
 }

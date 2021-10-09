@@ -20,7 +20,7 @@ export class UsuariosService extends ServiceGeneric<Usuarios,UsuariosDto>{
 
 
     async getAll(){
-        return await this.repository.find({join: { alias: 'usuarios',  leftJoinAndSelect: { servicios: 'usuarios.servicios' } }});
+        return await this.repository.find({join: { alias: 'usuarios',  leftJoinAndSelect: { movimientos: 'usuarios.movimientos',usuarios_creados:'usuarios.usuarios_creados' } }});
     }
 
     async getUsuarioByLogin(login:string){

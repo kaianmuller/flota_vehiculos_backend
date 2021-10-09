@@ -18,7 +18,7 @@ export class ServiciosService extends ServiceGeneric<Servicios,ServiciosDto>{
 
 
     async getAll(){
-        return await this.repository.find({join: { alias: 'servicios',  leftJoinAndSelect: { usuario: 'servicios.usuario_creador', auto: 'servicio.auto',movimientos:'servicio.movimientos' }}},);
+        return await this.repository.find();
     }
 
 
