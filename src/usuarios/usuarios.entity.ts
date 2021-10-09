@@ -1,5 +1,5 @@
 import { TipoUsuario } from "src/enums/tipo-usuario.enum";
-import { BeforeInsert, Column, Entity, Exclusion, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, Exclusion, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { EntityGeneric } from "src/shared/generic/EntityGeneric.entity";
 import { classToPlain, Exclude } from "class-transformer";
@@ -22,21 +22,12 @@ export class Usuarios extends EntityGeneric{
      login:string;
  
 
-    @Exclude({ toPlainOnly: true })
+    //@Exclude({ toPlainOnly: true})
     @Column({length: 70, nullable: true})
     contrasena:string;
      
     @Column()
     tipo_usuario:TipoUsuario;
-
-    @OneToMany(type => Usuarios,usuarios=>usuarios.usuario_creador)
-    @JoinColumn()
-    usuarios_creados:Array<Usuarios>;
-
-
-    @ManyToOne(type => Usuarios,usuarios=>usuarios.usuarios_creados)
-    @JoinColumn()
-    usuario_creador:Usuarios;
 
      @OneToMany(type => Servicios, servicio => servicio.usuario,{ cascade: true })
      servicios: Array<Servicios>;
@@ -45,9 +36,16 @@ export class Usuarios extends EntityGeneric{
      agendamientos:Array<Agendamientos>;
 
      @BeforeInsert()
+     @BeforeUpdate()
      async hashPassword(){
+         if(this.contrasena != null){
          const salt = await bcrypt.genSalt();
          this.contrasena = await bcrypt.hash(this.contrasena,salt);
+         }else{
+             this.contrasena = this.login;
+             const salt = await bcrypt.genSalt();
+             this.contrasena = await bcrypt.hash(this.contrasena,salt);
+         }
      }
 
      async validarPassword(password:string){

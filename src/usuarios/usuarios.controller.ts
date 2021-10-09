@@ -1,6 +1,8 @@
-import { Controller, Post } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { ControllerGeneric } from 'src/shared/generic/ControllerGeneric.controller';
+import { ChangeUserDto } from './change-user.dto';
 import { UsuariosDto } from './usuarios.dto';
 import { Usuarios } from './usuarios.entity';
 import { UsuariosService } from './usuarios.service';
@@ -14,6 +16,14 @@ export class UsuariosController extends ControllerGeneric<Usuarios,UsuariosDto>{
         super(usServ);
     }
 
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Post('change_password')
+async changePassword(@Body() dto:ChangeUserDto) {
+    return await this.service.changePassword(dto);
+}
 
 
 
