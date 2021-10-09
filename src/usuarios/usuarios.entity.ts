@@ -22,7 +22,7 @@ export class Usuarios extends EntityGeneric{
      login:string;
  
 
-    //@Exclude({ toPlainOnly: true})
+    @Exclude({ toPlainOnly: true})
     @Column({length: 70, nullable: true})
     contrasena:string;
      
@@ -38,14 +38,11 @@ export class Usuarios extends EntityGeneric{
      @BeforeInsert()
      @BeforeUpdate()
      async hashPassword(){
-         if(this.contrasena != null){
+         if(!this.contrasena){
+            this.contrasena = this.login;
+         }
          const salt = await bcrypt.genSalt();
          this.contrasena = await bcrypt.hash(this.contrasena,salt);
-         }else{
-             this.contrasena = this.login;
-             const salt = await bcrypt.genSalt();
-             this.contrasena = await bcrypt.hash(this.contrasena,salt);
-         }
      }
 
      async validarPassword(password:string){

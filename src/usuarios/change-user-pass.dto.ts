@@ -4,7 +4,7 @@ import { IsString } from "class-validator";
 
 
 
-export class ChangeUserDto{
+export class ChangeUserPassDto{
 
     @IsString()
     login:string;
