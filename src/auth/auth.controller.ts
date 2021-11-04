@@ -4,14 +4,14 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './login.dto';
 
 
-@ApiTags('Login')
-@Controller('login')
+@ApiTags('auth')
+@Controller('auth')
 export class AuthController {
 
     constructor(private authServ:AuthService){} 
 
 
-@Post()
+@Post('login')
 async login(@Body() loginDto:LoginDto){
     const {login,contrasena} = loginDto;
     const valido = await this.authServ.validarUsuario(login,contrasena);
@@ -22,6 +22,11 @@ async login(@Body() loginDto:LoginDto){
     return await this.authServ.generarTokenAcceso(login);
 }
 
+
+@Post('check')
+async checkToken(@Body() token:any){
+return await this.authServ.checkToken(token);
+}
 
 
 }

@@ -8,6 +8,15 @@ constructor(readonly repository:Repository<E>){
 
 }
     
+
+    async getAll(skip:number,take:number){
+        if(skip && take){
+        return await this.repository.find({skip:skip,take:take});
+        }else{
+        return await this.repository.find();   
+        }
+    }
+
     async getOne(id:number){
         const e =  await this.repository.findOne(id);
         if (!e) throw new NotFoundException('Elemento no existe');

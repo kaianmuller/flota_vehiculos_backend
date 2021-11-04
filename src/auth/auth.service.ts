@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import e from 'express';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 import { JWTPayload } from './jwt.payload';
 
@@ -20,7 +21,16 @@ async validarUsuario(login:string,contrasena:string){
 async generarTokenAcceso(login:string){
     const usuario = await this.usServ.getUsuarioByLogin(login);
     const payload: JWTPayload = {login:usuario.login};
-    return {access_token:this.jwtService.sign(payload)};
+    return {token:this.jwtService.sign(payload)};
+}
+
+
+async checkToken(token:any){
+ try{
+    return this.jwtService.verify(token.jwt,{secret:process.env.SECRET_KEY});
+ }catch(e){
+    return false
+ }
 }
 
 

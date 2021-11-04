@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { ControllerGeneric } from 'src/shared/generic/ControllerGeneric.controller';
@@ -23,6 +23,18 @@ export class UsuariosController extends ControllerGeneric<Usuarios,UsuariosDto>{
 @Post('change_password')
 async changePassword(@Body() dto:ChangeUserPassDto) {
     return await this.service.changePassword(dto);
+}
+
+
+
+@Get('existUserByLogin/:login')
+async existUserByLogin(@Param('login') login:string) {
+
+    if(await this.service.getUsuarioByLogin(login)){
+       return true; 
+    }
+
+    return false;
 }
 
 

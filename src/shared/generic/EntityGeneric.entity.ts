@@ -10,9 +10,9 @@ export class EntityGeneric{
     @Column()
     fecha_creacion:Date;
 
-    @Column()
+    @Column({nullable:true})
     fecha_alteracion:Date;
 
-    @Column()
+    @Column({nullable:true})
     descripcion:string;
 }

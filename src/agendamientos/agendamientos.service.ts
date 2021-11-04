@@ -17,10 +17,6 @@ export class AgendamientosService extends ServiceGeneric<Agendamientos,Agendamie
     }
     
     
-    async getAll(){
-        return await this.repository.find({join: { alias: 'agendamientos',  leftJoinAndSelect: { servicio: 'agendamientos.servicio' } }});
-    }
-    
     
     
     }

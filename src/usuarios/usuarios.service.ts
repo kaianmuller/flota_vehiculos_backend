@@ -19,11 +19,6 @@ export class UsuariosService extends ServiceGeneric<Usuarios,UsuariosDto>{
     }
 
 
-
-    async getAll(){
-        return await this.repository.find({join: { alias: 'usuarios',  leftJoinAndSelect: { servicios: 'usuarios.servicios'} }});
-    }
-
     async getUsuarioByLogin(login:string){
         return await this.repository.findOne({login:login});
     }
@@ -34,10 +29,11 @@ export class UsuariosService extends ServiceGeneric<Usuarios,UsuariosDto>{
         let usuario = await this.repository.findOne({login:dto.login});
 
 
-        if (!usuario || !await usuario.validarPassword(dto.lastPass)) throw new NotFoundException('Error al cambiar el password!');
+        if (!usuario || !await usuario.validarPassword(dto.act_pass)) throw new NotFoundException('Error al cambiar el password!');
         
         let editUser = usuario;
-        editUser.contrasena = dto.newPass;
+        editUser.contrasena = dto.new_pass;
+        editUser.fecha_alteracion = dto.fecha_alteracion;
 
         const editedUser  = Object.assign(usuario,editUser);
         

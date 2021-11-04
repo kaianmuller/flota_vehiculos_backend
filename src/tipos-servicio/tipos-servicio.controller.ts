@@ -4,7 +4,7 @@ import { TiposServicioDto } from './tipos-servicio.dto';
 import { TiposServicio } from './tipos-servicio.entity';
 import { TiposServicioService } from './tipos-servicio.service';
 
-@Controller('tipos-servicio')
+@Controller('tipos_servicio')
 export class TiposServicioController extends ControllerGeneric<TiposServicio,TiposServicioDto>{
 
 constructor(readonly tsServ:TiposServicioService){

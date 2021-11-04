@@ -1,4 +1,4 @@
-import { Body, Delete, Get, Param, Post, Put, Type, UseGuards } from "@nestjs/common";
+import { Body, Delete, Get, Param, Post, Put, Query, Req, Type, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiBearerAuth, ApiBody} from "@nestjs/swagger";
 
@@ -16,8 +16,8 @@ constructor(readonly service:any){
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Get()
-async getAll() {
-    return await this.service.getAll();
+async getAll(@Query() query:any){
+    return await this.service.getAll(query.skip,query.take);
 }
 
 @ApiBearerAuth()

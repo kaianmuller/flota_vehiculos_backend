@@ -1,3 +1,5 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 import { IsString } from "class-validator";
 
 
@@ -6,12 +8,20 @@ import { IsString } from "class-validator";
 
 export class ChangeUserPassDto{
 
+    
+    @ApiProperty()
+    @Type(() => Date)
+    fecha_alteracion:Date;
+
+    @ApiProperty()
     @IsString()
     login:string;
 
+    @ApiProperty()
     @IsString()
-    lastPass:string;
+    act_pass:string;
 
+    @ApiProperty()
     @IsString()
-    newPass:string;
+    new_pass:string;
 }

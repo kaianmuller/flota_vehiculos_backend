@@ -1,9 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsString } from "class-validator";
 import { TipoUsuario } from "src/enums/tipo-usuario.enum";
-import { Servicios } from "src/servicios/servicios.entity";
 import { DtoGeneric } from "src/shared/generic/DtoGeneric.dto";
-import { Usuarios } from "./usuarios.entity";
 
 
 

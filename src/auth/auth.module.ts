@@ -12,7 +12,7 @@ import { UsuariosModule } from 'src/usuarios/usuarios.module';
     ConfigModule.forRoot(),
     JwtModule.register({
     secret: process.env.SECRET_KEY,
-    signOptions: { expiresIn: '360000s' },
+    signOptions: { expiresIn: '300000s' },
   }),
 UsuariosModule,
 PassportModule

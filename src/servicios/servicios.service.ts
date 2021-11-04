@@ -17,10 +17,6 @@ export class ServiciosService extends ServiceGeneric<Servicios,ServiciosDto>{
     }
 
 
-    async getAll(){
-        return await this.repository.find();
-    }
-
 
 
 

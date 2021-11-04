@@ -15,4 +15,5 @@ export class TiposServicioService extends ServiceGeneric<TiposServicio,TiposServ
     }
 
 
+
 }
