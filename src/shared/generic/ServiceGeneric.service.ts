@@ -4,6 +4,8 @@ import { Repository } from "typeorm";
 @Injectable()
 export class ServiceGeneric <E,EDto>{
 
+    order:any = {id:"DESC"};
+
 constructor(readonly repository:Repository<E>){
 
 }
@@ -11,7 +13,7 @@ constructor(readonly repository:Repository<E>){
 
     async getAll(skip:number,take:number){
         if(skip && take){
-        return await this.repository.find({skip:skip,take:take});
+        return await this.repository.find({order:this.order, skip:skip, take:take});
         }else{
         return await this.repository.find();   
         }

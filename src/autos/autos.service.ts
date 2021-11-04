@@ -13,7 +13,7 @@ export class AutosService extends ServiceGeneric<Autos,AutosDto>{
         @InjectRepository(Autos)
         readonly repository:Repository<Autos>
         ){
-            super(repository);
+            super(repository,{id:"DESC"});
         }
 
 
