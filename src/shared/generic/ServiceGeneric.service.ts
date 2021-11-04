@@ -39,4 +39,8 @@ constructor(readonly repository:Repository<E>){
     async deleteOne(id:number){
         return await this.repository.delete(id);
     }
+
+    async getCount(){
+       return await this.repository.count();
+    }
 }

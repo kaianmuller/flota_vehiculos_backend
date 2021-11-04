@@ -49,6 +49,13 @@ async deleteOne(@Param('id') id:number){
     return await this.service.deleteOne(id); 
 }
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get()
+async getCount(){
+    return await this.service.getCount();
+}
+
 
 }
 
