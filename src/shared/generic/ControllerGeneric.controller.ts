@@ -15,6 +15,14 @@ constructor(readonly service:any){
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
+@Get('count')
+async getCount(){
+    return await this.service.getCount();
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @Get()
 async getAll(@Query() query:any){
     return await this.service.getAll(query.skip,query.take);
@@ -49,12 +57,6 @@ async deleteOne(@Param('id') id:number){
     return await this.service.deleteOne(id); 
 }
 
-@ApiBearerAuth()
-@UseGuards(AuthGuard('jwt'))
-@Get()
-async getCount(){
-    return await this.service.getCount();
-}
 
 
 }
