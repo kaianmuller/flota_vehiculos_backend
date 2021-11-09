@@ -1,5 +1,5 @@
 
-import { DtoGeneric } from "src/shared/generic/DtoGeneric.dto";
+import { DtoGeneric } from "src/shared/generic/dto-generic.dto";
 
 
 

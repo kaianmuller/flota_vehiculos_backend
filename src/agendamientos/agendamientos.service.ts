@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ServiceGeneric } from 'src/shared/generic/ServiceGeneric.service';
+import { ServiceGeneric } from 'src/shared/generic/service-generic.service';
 import { Repository } from 'typeorm';
 import { AgendamientosDto } from './agendamientos.dto';
 import { Agendamientos } from './agendamientos.entity';

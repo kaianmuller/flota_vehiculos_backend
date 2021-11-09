@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsNumber, IsString } from "class-validator";
 import { DisponibilidadAuto } from "src/enums/disponibilidad-auto.enum";
 import { Servicios } from "src/servicios/servicios.entity";
-import { DtoGeneric } from "src/shared/generic/DtoGeneric.dto";
+import { DtoGeneric } from "src/shared/generic/dto-generic.dto";
 
 
 

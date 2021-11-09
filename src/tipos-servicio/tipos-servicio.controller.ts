@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { ControllerGeneric } from 'src/shared/generic/ControllerGeneric.controller';
+import { ControllerGeneric } from 'src/shared/generic/controller-generic.controller';
 import { TiposServicioDto } from './tipos-servicio.dto';
 import { TiposServicio } from './tipos-servicio.entity';
 import { TiposServicioService } from './tipos-servicio.service';

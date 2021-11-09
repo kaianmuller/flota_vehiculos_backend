@@ -3,7 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsEnum, IsNumber } from "class-validator";
 import { EstadoMovimiento } from "src/enums/estado-movimiento.enum";
-import { DtoGeneric } from "src/shared/generic/DtoGeneric.dto";
+import { DtoGeneric } from "src/shared/generic/dto-generic.dto";
 
 
 

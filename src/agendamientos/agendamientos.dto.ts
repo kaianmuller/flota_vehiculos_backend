@@ -5,7 +5,7 @@ import { TipoAgendamiento } from "src/enums/tipo-agendamiento.enum";
 import { TipoPeriodoAgendamiento } from "src/enums/tipo-periodo-agendamiento.enum";
 import { ServiciosDto } from "src/servicios/servicios.dto";
 import { Servicios } from "src/servicios/servicios.entity";
-import { DtoGeneric } from "src/shared/generic/DtoGeneric.dto";
+import { DtoGeneric } from "src/shared/generic/dto-generic.dto";
 
 
 

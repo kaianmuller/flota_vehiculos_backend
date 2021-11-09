@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ServiceGeneric } from 'src/shared/generic/ServiceGeneric.service';
+import { ServiceGeneric } from 'src/shared/generic/service-generic.service';
 import { Repository } from 'typeorm';
 import { AutosDto } from './autos.dto';
 import { Autos } from './autos.entity';
@@ -13,7 +13,7 @@ export class AutosService extends ServiceGeneric<Autos,AutosDto>{
         @InjectRepository(Autos)
         readonly repository:Repository<Autos>
         ){
-            super(repository,{id:"DESC"});
+            super(repository);
         }
 
 

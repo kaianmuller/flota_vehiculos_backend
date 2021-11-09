@@ -1,7 +1,7 @@
 
 import { Agendamientos } from "src/agendamientos/agendamientos.entity";
 import { Servicios } from "src/servicios/servicios.entity";
-import { EntityGeneric } from "src/shared/generic/EntityGeneric.entity";
+import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
 import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 

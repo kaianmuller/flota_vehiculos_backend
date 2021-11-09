@@ -2,7 +2,7 @@ import { Autos } from "src/autos/autos.entity";
 import { TipoAgendamiento } from "src/enums/tipo-agendamiento.enum";
 import { TipoPeriodoAgendamiento } from "src/enums/tipo-periodo-agendamiento.enum";
 import { Servicios } from "src/servicios/servicios.entity";
-import { EntityGeneric } from "src/shared/generic/EntityGeneric.entity";
+import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
 import { TiposServicio } from "src/tipos-servicio/tipos-servicio.entity";
 import { Usuarios } from "src/usuarios/usuarios.entity";
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";

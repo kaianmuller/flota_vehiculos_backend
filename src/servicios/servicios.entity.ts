@@ -2,7 +2,7 @@
 import { Agendamientos } from "src/agendamientos/agendamientos.entity";
 import { Autos } from "src/autos/autos.entity";
 import { EstadoMovimiento } from "src/enums/estado-movimiento.enum";
-import { EntityGeneric } from "src/shared/generic/EntityGeneric.entity";
+import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
 import { TiposServicio } from "src/tipos-servicio/tipos-servicio.entity";
 import { Usuarios } from "src/usuarios/usuarios.entity";
 import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";

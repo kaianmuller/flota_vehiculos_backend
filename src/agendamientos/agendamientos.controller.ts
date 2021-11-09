@@ -1,6 +1,6 @@
 import { Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { ControllerGeneric } from 'src/shared/generic/ControllerGeneric.controller';
+import { ControllerGeneric } from 'src/shared/generic/controller-generic.controller';
 import { AgendamientosDto } from './agendamientos.dto';
 import { Agendamientos } from './agendamientos.entity';
 import { AgendamientosService } from './agendamientos.service';

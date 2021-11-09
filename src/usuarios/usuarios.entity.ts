@@ -1,8 +1,8 @@
 import { TipoUsuario } from "src/enums/tipo-usuario.enum";
 import { BeforeInsert, BeforeUpdate, Column, Entity, Exclusion, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import * as bcrypt from "bcrypt";
-import { EntityGeneric } from "src/shared/generic/EntityGeneric.entity";
-import { classToPlain, Exclude } from "class-transformer";
+import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
+import { classToPlain, Exclude, Type } from "class-transformer";
 import { Servicios } from "src/servicios/servicios.entity";
 import { ApiProperty } from "@nestjs/swagger";
 import { Agendamientos } from "src/agendamientos/agendamientos.entity";
@@ -13,19 +13,17 @@ import { Agendamientos } from "src/agendamientos/agendamientos.entity";
 export class Usuarios extends EntityGeneric{
 
 
-
     @Column()
     nombre:string;
 
-    @ApiProperty()
      @Column({unique: true})
      login:string;
  
-
     @Exclude({ toPlainOnly: true})
     @Column({length: 70, nullable: true})
     contrasena:string;
      
+
     @Column()
     tipo_usuario:TipoUsuario;
 
