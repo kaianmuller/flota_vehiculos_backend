@@ -1,4 +1,4 @@
 export enum TipoUsuario{
-    ADMINISTRADOR = 'A',
-    USUARIO = 'U'
+    ADMINISTRADOR = 'ADMINISTRADOR',
+    USUARIO = 'USUARIO'
 }

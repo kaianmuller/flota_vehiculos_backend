@@ -30,12 +30,10 @@ constructor(readonly repository:Repository<E>){
     }
 
     async editOne(id:number,dto: EDto){
-        console.log(dto);
-        /*
         const e = await this.repository.findOne(id);
         if (!e) throw new NotFoundException('Elemento no existe!');
         const editedE = Object.assign(e, dto);
-         return await this.repository.save(editedE);*/
+         return await this.repository.save(editedE);
 
     }
 
