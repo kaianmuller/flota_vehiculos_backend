@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Param, Post, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { ControllerGeneric } from 'src/shared/generic/controller-generic.controller';
 import { ChangeUserPassDto } from './change-user-pass.dto';
 import { UsuariosDto } from './usuarios.dto';
 import { Usuarios } from './usuarios.entity';
@@ -10,40 +9,77 @@ import { UsuariosService } from './usuarios.service';
 
 @ApiTags('Usuarios')
 @Controller('usuarios')
-export class UsuariosController extends ControllerGeneric<Usuarios,UsuariosDto>{
+export class UsuariosController{
 
-    constructor(private usServ:UsuariosService){
-        super(usServ);
-    }
+    constructor(private service:UsuariosService){}
 
 
-
-@Post()
-@UsePipes(new ValidationPipe())
-async createOne(@Body() dto:UsuariosDto){
-        return await this.usServ.createOne(dto);
-}
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Post('change_password')
-@UsePipes(new ValidationPipe())
 async changePassword(@Body() dto:ChangeUserPassDto) {
-    return await this.usServ.changePassword(dto);
+    return await this.service.changePassword(dto);
 }
 
 
 
 @Get('existUserByLogin/:login')
-@UsePipes(new ValidationPipe())
 async existUserByLogin(@Param('login') login:string) {
 
-    if(await this.usServ.getUsuarioByLogin(login)){
+    if(await this.service.getUsuarioByLogin(login)){
        return true; 
     }
 
     return false;
 }
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get('count')
+async getCount(){
+    return await this.service.getCount();
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get()
+async getAll(@Query() query:any){
+    return await this.service.getAll(query.skip,query.take);
+}
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get(':id')
+async getOne(@Param('id') id:number){
+    return await this.service.getOne(id);
+}
+
+
+
+@Post()
+async createOne(@Body() dto:UsuariosDto){
+    return await this.service.createOne(dto);
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Put(':id')
+async editOne(@Param('id') id:number,@Body() dto:UsuariosDto){
+    return await this.service.editOne(id,dto);
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Delete(':id')
+async deleteOne(@Param('id') id:number){
+    return await this.service.deleteOne(id); 
+}
+
 
 
 

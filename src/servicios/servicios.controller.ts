@@ -1,6 +1,6 @@
-import { Controller, Post } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { ControllerGeneric } from 'src/shared/generic/controller-generic.controller';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { ServiciosDto } from './servicios.dto';
 import { Servicios } from './servicios.entity';
 import { ServiciosService } from './servicios.service';
@@ -8,14 +8,57 @@ import { ServiciosService } from './servicios.service';
 
 @ApiTags('Servicios')
 @Controller('servicios')
-export class ServiciosController extends ControllerGeneric<Servicios,ServiciosDto>{
+export class ServiciosController{
 
 
-    constructor(private readonly servService:ServiciosService){
-        super(servService);
-    }
+    constructor(private readonly service:ServiciosService){}
     
-    
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get('count')
+async getCount(){
+    return await this.service.getCount();
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get()
+async getAll(@Query() query:any){
+    return await this.service.getAll(query.skip,query.take);
+}
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get(':id')
+async getOne(@Param('id') id:number){
+    return await this.service.getOne(id);
+}
+
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Post()
+async createOne(@Body() dto:ServiciosDto){
+    return await this.service.createOne(dto);
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Put(':id')
+async editOne(@Param('id') id:number,@Body() dto:ServiciosDto){
+    return await this.service.editOne(id,dto);
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Delete(':id')
+async deleteOne(@Param('id') id:number){
+    return await this.service.deleteOne(id); 
+}
 
     
     

@@ -1,7 +1,6 @@
-import { Controller, Get, Post } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { ControllerGeneric } from 'src/shared/generic/controller-generic.controller';
-import { EntitySchema } from 'typeorm';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { AutosDto } from './autos.dto';
 import { Autos } from './autos.entity';
 import { AutosService } from './autos.service';
@@ -9,13 +8,68 @@ import { AutosService } from './autos.service';
 
 @ApiTags('Autos')
 @Controller('autos')
-export class AutosController extends ControllerGeneric<Autos,AutosDto>{
+export class AutosController{
 
-    constructor(private readonly autService:AutosService){
-     super(autService);
+    constructor(private readonly service:AutosService){
     }
     
+    @Get('existAutoByChapa/:chapa')
+    async existAutoByChapa(@Param('chapa') chapa:string) {
+    
+        if(await this.service.getAutoByChapa(chapa)){
+           return true; 
+        }
+    
+        return false;
+    }
 
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get('count')
+async getCount(){
+    return await this.service.getCount();
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get()
+async getAll(@Query() query:any){
+    return await this.service.getAll(query.skip,query.take);
+}
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get(':id')
+async getOne(@Param('id') id:number){
+    return await this.service.getOne(id);
+}
+
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Post()
+async createOne(@Body() dto:AutosDto){
+    return await this.service.createOne(dto);
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Put(':id')
+async editOne(@Param('id') id:number,@Body() dto:AutosDto){
+    return await this.service.editOne(id,dto);
+}
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Delete(':id')
+async deleteOne(@Param('id') id:number){
+    return await this.service.deleteOne(id); 
+}
     
     
     

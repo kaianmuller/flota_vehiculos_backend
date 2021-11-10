@@ -17,5 +17,10 @@ export class AutosService extends ServiceGeneric<Autos,AutosDto>{
         }
 
 
+    async getAutoByChapa(chapa:string){
+      return this.repository.findOne({chapa:chapa});
+    }
+
+
 
 }
