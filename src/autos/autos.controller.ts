@@ -13,15 +13,20 @@ export class AutosController{
     constructor(private readonly service:AutosService){
     }
     
-    @Get('existAutoByChapa/:chapa')
-    async existAutoByChapa(@Param('chapa') chapa:string) {
+
+
+
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
+@Get('existAutoByChapa/:chapa')
+async existAutoByChapa(@Param('chapa') chapa:string) {
     
         if(await this.service.getAutoByChapa(chapa)){
            return true; 
         }
     
         return false;
-    }
+}
 
 
 @ApiBearerAuth()
@@ -36,7 +41,7 @@ async getCount(){
 @UseGuards(AuthGuard('jwt'))
 @Get()
 async getAll(@Query() query:any){
-    return await this.service.getAll(query.skip,query.take);
+    return await this.service.getAll(query);
 }
 
 @ApiBearerAuth()

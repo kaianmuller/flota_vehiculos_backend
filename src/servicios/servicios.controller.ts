@@ -25,7 +25,7 @@ async getCount(){
 @UseGuards(AuthGuard('jwt'))
 @Get()
 async getAll(@Query() query:any){
-    return await this.service.getAll(query.skip,query.take);
+    return await this.service.getAll(query);
 }
 
 @ApiBearerAuth()
