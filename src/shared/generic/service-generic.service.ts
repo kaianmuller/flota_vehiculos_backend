@@ -112,7 +112,7 @@ constructor(readonly repository:Repository<E>){
             return {[key]:MoreThanOrEqual(target.min)}
         }else if(target.min == null && target.max != null){
             return {[key]:LessThanOrEqual(target.max)}
-        }
+        }                               
 
         return{};
     }

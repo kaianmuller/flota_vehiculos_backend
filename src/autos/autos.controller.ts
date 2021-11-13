@@ -16,7 +16,7 @@ export class AutosController{
 
 
 
-@ApiBearerAuth()
+@ApiBearerAuth()    	                        
 @UseGuards(AuthGuard('jwt'))
 @Get('existAutoByChapa/:chapa')
 async existAutoByChapa(@Param('chapa') chapa:string) {
@@ -78,4 +78,4 @@ async deleteOne(@Param('id') id:number){
     
     
     
-    }
+}

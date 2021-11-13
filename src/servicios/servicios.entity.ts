@@ -1,7 +1,6 @@
 
-import { Agendamientos } from "src/agendamientos/agendamientos.entity";
 import { Autos } from "src/autos/autos.entity";
-import { EstadoMovimiento } from "src/enums/estado-movimiento.enum";
+import { EstadoServicio } from "src/enums/estado-servicio.enum";
 import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
 import { TiposServicio } from "src/tipos-servicio/tipos-servicio.entity";
 import { Usuarios } from "src/usuarios/usuarios.entity";
@@ -29,7 +28,7 @@ export class Servicios extends EntityGeneric{
     valor_servicio:number;
 
     @Column()
-    estado:EstadoMovimiento;
+    estado:EstadoServicio;
 
     
     @ManyToOne(type => TiposServicio, tipo_servicio => tipo_servicio.servicios)

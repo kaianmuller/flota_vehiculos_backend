@@ -2,7 +2,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsEnum, IsNumber } from "class-validator";
-import { EstadoMovimiento } from "src/enums/estado-movimiento.enum";
+import { EstadoServicio } from "src/enums/estado-servicio.enum";
 import { DtoGeneric } from "src/shared/generic/dto-generic.dto";
 
 
@@ -34,7 +34,7 @@ export class ServiciosDto extends DtoGeneric{
     valor_servicio:number;
 
     @ApiProperty()
-    @IsEnum(EstadoMovimiento)
-    estado:EstadoMovimiento;
+    @IsEnum(EstadoServicio)
+    estado:EstadoServicio;
 
 }
