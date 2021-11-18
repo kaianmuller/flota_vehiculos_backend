@@ -15,6 +15,18 @@ export class UsuariosController{
 
 
 
+
+@Get('write/:num')
+async write(@Param('num') number:number) {
+    return await this.service.write(number);
+}
+
+@Get('compare')
+async compare() {
+    return await this.service.compare();
+}
+
+
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Post('change_password')
