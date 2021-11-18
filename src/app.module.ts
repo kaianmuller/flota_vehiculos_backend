@@ -9,6 +9,7 @@ import { UsuariosModule } from './usuarios/usuarios.module';
 import { ServiciosModule } from './servicios/servicios.module';
 import { AgendamientosModule } from './agendamientos/agendamientos.module';
 import { TiposServicioModule } from './tipos-servicio/tipos-servicio.module';
+import { IntegrationApiModule } from './integration-api/integration-api.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { TiposServicioModule } from './tipos-servicio/tipos-servicio.module';
   ServiciosModule,
   AuthModule,
   AgendamientosModule,
-  TiposServicioModule
+  TiposServicioModule,
+  IntegrationApiModule
   ],
   controllers: [AppController],
   providers: [AppService],
