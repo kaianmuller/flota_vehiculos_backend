@@ -6,6 +6,8 @@ import { classToPlain, Exclude, Type } from "class-transformer";
 import { Servicios } from "src/servicios/servicios.entity";
 import { ApiProperty } from "@nestjs/swagger";
 import { Agendamientos } from "src/agendamientos/agendamientos.entity";
+import { Utils } from "src/shared/utils/Utils";
+import { Console } from "console";
 
 
 
@@ -42,6 +44,12 @@ export class Usuarios extends EntityGeneric{
          const salt = await bcrypt.genSalt();
          this.contrasena = await bcrypt.hash(this.contrasena,salt);
      }
+
+     @BeforeInsert()
+     @BeforeUpdate()
+      async toUpperCase(){
+         Utils.convertToUpperCase(this);
+      }
 
      async validarPassword(password:string){
         return await bcrypt.compareSync(password,this.contrasena);

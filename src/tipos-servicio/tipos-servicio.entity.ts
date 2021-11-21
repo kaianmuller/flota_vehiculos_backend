@@ -2,7 +2,8 @@
 import { Agendamientos } from "src/agendamientos/agendamientos.entity";
 import { Servicios } from "src/servicios/servicios.entity";
 import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Utils } from "src/shared/utils/Utils";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -17,5 +18,9 @@ export class TiposServicio extends EntityGeneric{
     @OneToOne(type => Agendamientos,agendamiento => agendamiento.tipo_servicio,{cascade:true})
     agendamientos:Array<Agendamientos>;
 
-    
+    @BeforeInsert()
+    @BeforeUpdate()
+     async toUpperCase(){
+        Utils.convertToUpperCase.bind(this);
+     }
 }

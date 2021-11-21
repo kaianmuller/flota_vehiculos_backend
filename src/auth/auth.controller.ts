@@ -14,7 +14,13 @@ export class AuthController {
 @Post('login')
 async login(@Body() loginDto:LoginDto){
     const {login,contrasena} = loginDto;
-    const valido = await this.authServ.validarUsuario(login,contrasena);
+    let valido = null;
+    if(login && contrasena){
+    valido = await this.authServ.validarUsuario(login,contrasena);
+    }else{
+    valido = null;   
+    }
+
     if(!valido){
         throw new UnauthorizedException("No es un usuario valido!");
     }

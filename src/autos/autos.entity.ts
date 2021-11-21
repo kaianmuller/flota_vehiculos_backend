@@ -3,7 +3,8 @@ import { Agendamientos } from "src/agendamientos/agendamientos.entity";
 import { DisponibilidadAuto } from "src/enums/disponibilidad-auto.enum";
 import { Servicios } from "src/servicios/servicios.entity";
 import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Utils } from "src/shared/utils/Utils";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -40,6 +41,13 @@ export class Autos extends EntityGeneric{
 
      @OneToMany(type => Agendamientos,agendamiento => agendamiento.auto,{cascade:true})
      agendamientos:Array<Agendamientos>
+
+
+     @BeforeInsert()
+     @BeforeUpdate()
+      async toUpperCase(){
+         Utils.convertToUpperCase(this);
+      }
 
 
 }

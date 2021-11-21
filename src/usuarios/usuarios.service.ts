@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ServiceGeneric } from 'src/shared/generic/service-generic.service';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { ChangeUserPassDto } from './change-user-pass.dto';
 import { UsuariosDto } from './usuarios.dto';
 import { Usuarios } from './usuarios.entity';
@@ -20,7 +20,7 @@ export class UsuariosService extends ServiceGeneric<Usuarios,UsuariosDto>{
 
 
     async getUsuarioByLogin(login:string){
-        return await this.repository.findOne({login:login});
+        return await this.repository.findOne({where:{login:ILike(login)}});
     }
 
     

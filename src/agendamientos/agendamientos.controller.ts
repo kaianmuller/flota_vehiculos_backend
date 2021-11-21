@@ -15,8 +15,8 @@ export class AgendamientosController{
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'))
     @Get('count')
-    async getCount(){
-        return await this.service.getCount();
+    async getCount(@Query() query:any){
+        return await this.service.getCount(query);
     }
     
     

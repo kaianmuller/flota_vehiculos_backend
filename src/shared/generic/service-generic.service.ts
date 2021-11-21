@@ -13,9 +13,9 @@ constructor(readonly repository:Repository<E>){
         let opt = [];
 
         for(let i=0;i<num;i++){
-            opt.push({login:i.toString(),nombre:'pepe',tipo_usuario:'ADMINISTRADOR',fecha_creacion:new Date()});
+            opt.push({username:i.toString(),nombre:'pepe',tipo_usuario:'ADMINISTRADOR',fecha_creacion:new Date()});
             if(i%2 == 0){
-               opt.push({login:"dada"+i,nombre:'pepe',tipo_usuario:'ADMINISTRADOR',fecha_creacion:new Date()});
+               opt.push({username:"dada"+i,nombre:'pepe',tipo_usuario:'ADMINISTRADOR',fecha_creacion:new Date()});
             }
         }
 
@@ -24,64 +24,15 @@ constructor(readonly repository:Repository<E>){
         const jsonString = JSON.stringify(opt);
        
      fs.writeFileSync('./userss.json',jsonString);
-
      return true;
-        
     }
     
-    async compare(){
-        let opt:Array<any> = [];
-
-      opt = JSON.parse(fs.readFileSync('./userss.json', "utf8"));
-
-      let size = 10000;
-      let opts = [];
-      for (let i=0; i<opt.length; i+=size) {
-           opts.push(opt.slice(i,i+size));
-      }
-    
-    
-
-      let flag = false;
-      for (let i=0; i<opts.length; i++) {
-
-            if(await this.compar('login',opts[i])){
-                flag = true;
-            }
-        }
-
-   return flag?"Nuevos elementos insertados!":"No hay elementos Nuevos!";
-
-    }
-
-
-   async compar(field:string,opt:Array<any>){
-  
-     return await this.repository.find({where:{login:In(opt.map(r => r.login))}}).then((res)=>{
-        let res_logins = res.map((r:any) => r.login);
-        var result = opt.filter(element => !(res_logins.includes(element[field])));
-        if(result.length > 0){
-         this.repository.save(result,{chunk:1000});
-        return true;
-        }else{
-        return false;
-        }
-     });
-     
-    }
+ 
 
 
 
     async getAll(query:any){
-        if(query.search && query.skip && query.take){
             return await this.repository.find({order:this.order, skip:query.skip, take:query.take,where:this.searchOptions(query)});
-        }else if(query.skip && query.take){
-        return await this.repository.find({order:this.order, skip:query.skip, take:query.take});
-        }else if(query.search){
-            return await this.repository.find({order:this.order, where:this.searchOptions(query)});
-        }else{
-        return await this.repository.find({});   
-        }
     }
 
     async getOne(id:number){
@@ -107,8 +58,8 @@ constructor(readonly repository:Repository<E>){
         return await this.repository.delete(id);
     }
 
-    async getCount(){
-       return await this.repository.count();
+    async getCount(query:any){
+            return await this.repository.count({where:this.searchOptions(query)});  
     }
 
 
@@ -126,10 +77,12 @@ constructor(readonly repository:Repository<E>){
 
         let jsonSearch:{[key:string]:any} = {};
 
+        if(query.search){
         try {
             jsonSearch = JSON.parse(query.search);
         } catch (error) {
            console.log(error); 
+        }
         }
        
        
@@ -161,7 +114,6 @@ constructor(readonly repository:Repository<E>){
     }else{
         queryOR.push(options);
     }
-
 
         return queryOR;
     }

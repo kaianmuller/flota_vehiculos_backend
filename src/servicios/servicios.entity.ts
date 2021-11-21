@@ -2,9 +2,10 @@
 import { Autos } from "src/autos/autos.entity";
 import { EstadoServicio } from "src/enums/estado-servicio.enum";
 import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
+import { Utils } from "src/shared/utils/Utils";
 import { TiposServicio } from "src/tipos-servicio/tipos-servicio.entity";
 import { Usuarios } from "src/usuarios/usuarios.entity";
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -39,5 +40,13 @@ export class Servicios extends EntityGeneric{
 
     @ManyToOne(type => Usuarios, usuario => usuario.servicios)
     usuario:Usuarios;
+
+
+
+    @BeforeInsert()
+    @BeforeUpdate()
+     async toUpperCase(){
+        Utils.convertToUpperCase(this);
+     }
     
 }

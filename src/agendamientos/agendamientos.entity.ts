@@ -3,9 +3,10 @@ import { TipoAgendamiento } from "src/enums/tipo-agendamiento.enum";
 import { TipoPeriodoAgendamiento } from "src/enums/tipo-periodo-agendamiento.enum";
 import { Servicios } from "src/servicios/servicios.entity";
 import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
+import { Utils } from "src/shared/utils/Utils";
 import { TiposServicio } from "src/tipos-servicio/tipos-servicio.entity";
 import { Usuarios } from "src/usuarios/usuarios.entity";
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 
 
@@ -35,5 +36,12 @@ auto:Autos;
 
 @ManyToOne(type => Usuarios, usuario=>usuario.agendamientos)
 usuario:Usuarios;
+
+
+@BeforeInsert()
+@BeforeUpdate()
+ async toUpperCase(){
+    Utils.convertToUpperCase(this);
+ }
 
 }

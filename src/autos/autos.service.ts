@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ServiceGeneric } from 'src/shared/generic/service-generic.service';
-import { Between, In, LessThan, Like, MoreThan, Repository } from 'typeorm';
+import { Between, ILike, In, LessThan, Like, MoreThan, Repository } from 'typeorm';
 import { workerData } from 'worker_threads';
 import { AutosDto } from './autos.dto';
 import { Autos } from './autos.entity';
@@ -19,7 +19,7 @@ export class AutosService extends ServiceGeneric<Autos,AutosDto>{
 
 
     async getAutoByChapa(chapa:string){
-      return this.repository.findOne({chapa:chapa});
+      return this.repository.findOne({where:{chapa:ILike(chapa)}});
     }
 
 

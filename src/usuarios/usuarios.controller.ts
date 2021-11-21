@@ -21,11 +21,6 @@ async write(@Param('num') number:number) {
     return await this.service.write(number);
 }
 
-@Get('compare')
-async compare() {
-    return await this.service.compare();
-}
-
 
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
@@ -38,7 +33,6 @@ async changePassword(@Body() dto:ChangeUserPassDto) {
 
 @Get('existUserByLogin/:login')
 async existUserByLogin(@Param('login') login:string) {
-
     if(await this.service.getUsuarioByLogin(login)){
        return true; 
     }
@@ -50,8 +44,8 @@ async existUserByLogin(@Param('login') login:string) {
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Get('count')
-async getCount(){
-    return await this.service.getCount();
+async getCount(@Query() query:any){
+    return await this.service.getCount(query);
 }
 
 
