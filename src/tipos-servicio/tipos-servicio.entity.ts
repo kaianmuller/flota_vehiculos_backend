@@ -21,6 +21,6 @@ export class TiposServicio extends EntityGeneric{
     @BeforeInsert()
     @BeforeUpdate()
      async toUpperCase(){
-        Utils.convertToUpperCase.bind(this);
+        Utils.convertToFormat(this);
      }
 }

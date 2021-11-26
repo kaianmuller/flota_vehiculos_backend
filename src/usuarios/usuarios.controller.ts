@@ -16,12 +16,6 @@ export class UsuariosController{
 
 
 
-@Get('write/:num')
-async write(@Param('num') number:number) {
-    return await this.service.write(number);
-}
-
-
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Post('change_password')

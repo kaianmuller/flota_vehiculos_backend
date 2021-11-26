@@ -1,6 +1,7 @@
 import { All, Injectable, NotFoundException } from "@nestjs/common";
 import { Any, Between, ILike, In, LessThanOrEqual, Like, MoreThanOrEqual, Not, Repository } from "typeorm";
-const fs = require('fs');
+import { Utils } from "../utils/Utils";
+
 @Injectable()
 export class ServiceGeneric <E,EDto>{
 
@@ -9,30 +10,16 @@ export class ServiceGeneric <E,EDto>{
 constructor(readonly repository:Repository<E>){
 }
 
-    async write(num:number){
-        let opt = [];
+  
 
-        for(let i=0;i<num;i++){
-            opt.push({username:i.toString(),nombre:'pepe',tipo_usuario:'ADMINISTRADOR',fecha_creacion:new Date()});
-            if(i%2 == 0){
-               opt.push({username:"dada"+i,nombre:'pepe',tipo_usuario:'ADMINISTRADOR',fecha_creacion:new Date()});
-            }
+
+    async getAll(query?:any){
+        if(query){
+            return await this.repository.find({join: {alias: 'a',leftJoinAndSelect: this.setLeftJoin(query)},
+            order:this.order, skip:query.skip, take:query.take,where:this.searchOptions(query)});
+        }else{
+            return await this.repository.find();   
         }
-
-        
-
-        const jsonString = JSON.stringify(opt);
-       
-     fs.writeFileSync('./userss.json',jsonString);
-     return true;
-    }
-    
- 
-
-
-
-    async getAll(query:any){
-            return await this.repository.find({order:this.order, skip:query.skip, take:query.take,where:this.searchOptions(query)});
     }
 
     async getOne(id:number){
@@ -58,22 +45,36 @@ constructor(readonly repository:Repository<E>){
         return await this.repository.delete(id);
     }
 
-    async getCount(query:any){
-            return await this.repository.count({where:this.searchOptions(query)});  
+    async getCount(query?:any){
+            if(query){
+            return await this.repository.count({join: {alias: 'a',leftJoinAndSelect: this.setLeftJoin(query)},
+            where:this.searchOptions(query)});  
+            }else{
+                return await this.repository.count();   
+            }
     }
 
 
+
+    setLeftJoin(query:any):{[key:string]:any}{
+        let leftJoin = {};
+        if(query.join && query.join.length > 0){
+            query.join.forEach((e:string) => {
+            leftJoin[e] = 'a.'+e; 
+            });
+        }
+        return leftJoin;
+    }
 
 
     searchOptions(query:any):{[key:string]:any}{
         let options:{[key:string]:any} = {};
         let search:{[key:string]:any} = {};
-
-        options = {};
-        search = {};
-
+        
+        let queryAlias = [];
         let queryOR = [];
-    
+
+
 
         let jsonSearch:{[key:string]:any} = {};
 
@@ -84,26 +85,78 @@ constructor(readonly repository:Repository<E>){
            console.log(error); 
         }
         }
-       
-       
-        for(let k in jsonSearch){
-            
-            if(jsonSearch[k]){
-                if( typeof jsonSearch[k] != 'string'){
-                    if(jsonSearch[k].value){
-                        Object.assign(options,{[k]:jsonSearch[k].value});
-                    }else if(jsonSearch[k].min || jsonSearch[k].max){
-                        Object.assign(options,this.getObjectQueryNumber(k,jsonSearch[k]));
-                    }else if(jsonSearch[k].from || jsonSearch[k].to){
-                        Object.assign(options,this.getObjectQueryDate(k,jsonSearch[k]));
+
+
+    for(let key in jsonSearch){  // procesar el grupo principal sin los alias
+
+        if(jsonSearch[key]){
+            if(key != 'alias'){
+                if( typeof jsonSearch[key] != 'string'){
+                    if(jsonSearch[key].value){
+                        Object.assign(options,{[key]:jsonSearch[key].value});
+                    }else if(jsonSearch[key].min || jsonSearch[key].max){
+                        Object.assign(options,this.getObjectQueryNumber(key,jsonSearch[key]));
+                    }else if(jsonSearch[key].from || jsonSearch[key].to){
+                        Object.assign(options,this.getObjectQueryDate(key,jsonSearch[key]));
+                    }
+                }else if(jsonSearch[key].length > 0){
+                    Object.assign(search,{[key]:ILike('%'+jsonSearch[key]+'%')});
+                }
+
+
+            }else{
+                    //procesar el grupo de alias
+
+
+                let alias:{[key:string]:any} = {};
+                for(let ke in jsonSearch[key]){
+                    alias[jsonSearch[key][ke].alias] = {search:{},options:{}};
+                }
+
+
+                for(let k in jsonSearch[key]){
+                   if( typeof jsonSearch[key][k].target != 'string'){
+                        if(jsonSearch[key][k].target.value){
+                            Object.assign(alias[jsonSearch[key][k].alias].options,{[k]:jsonSearch[key][k].target.value});
+                        }else if(jsonSearch[key][k].target.min || jsonSearch[key][k].target.max){
+                            Object.assign(alias[jsonSearch[key][k].alias].options,{[k]:this.getObjectQueryNumber(k,jsonSearch[key][k].target)});
+                        }else if(jsonSearch[key][k].target.from || jsonSearch[key][k].target.to){
+                            Object.assign(alias[jsonSearch[key][k].alias].options,{[k]:this.getObjectQueryDate(k,jsonSearch[key][k].target)});
+                        }
+                    }else if(jsonSearch[key][k].target.length > 0){
+                            Object.assign(alias[jsonSearch[key][k].alias].search,{[k]:{alias:jsonSearch[key][k].alias,target:ILike('%'+jsonSearch[key][k].target+'%')}});
+                        }
+                }
+
+              
+
+            for(let a in alias){
+                if(Object.values(alias[a].search).length > 0){
+                    for(let k in alias[a].search){
+                        let o = {[a]:{}};
+                        Object.assign(o[a],{[k]:alias[a].search[k].target});
+                        Object.assign(o[a],alias[a].options);
+                     if(!Utils.isEmpty(o[a])){queryAlias.push(o)};
                     }
                 }else{
-                    Object.assign(search,new Object({[k]:ILike('%'+jsonSearch[k]+'%')}));
+                    if(!Utils.isEmpty(alias[a].options)){queryAlias.push({[a]:alias[a].options})}
                 }
             }
-        }
 
-        
+            //fin del proceso del grupo de alias
+
+
+            }
+        }
+    }
+
+if(queryAlias.length > 0){
+    for(let q of queryAlias){
+            Object.assign(q,options);
+            queryOR.push(q);
+    }
+}
+
     if(Object.values(search).length > 0){
         for(let k in search){
             let o = {};
@@ -112,8 +165,12 @@ constructor(readonly repository:Repository<E>){
             queryOR.push(o);
         }
     }else{
-        queryOR.push(options);
+       if(!Utils.isEmpty(options) && queryAlias.length == 0){ queryOR.push(options)}
     }
+
+
+
+  // console.log(queryOR);
 
         return queryOR;
     }
@@ -143,6 +200,8 @@ constructor(readonly repository:Repository<E>){
 
         return{};
     }
+
+
 
 
 }

@@ -13,6 +13,13 @@ export class ServiciosController{
 
     constructor(private readonly service:ServiciosService){}
     
+
+    @Get('test')
+    async getTest(@Query() query:any){
+        return await this.service.getTest();
+    }
+
+
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Get('count')

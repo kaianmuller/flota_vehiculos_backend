@@ -29,6 +29,7 @@ async checkToken(token:any){
  try{
     return this.jwtService.verify(token.jwt,{secret:process.env.SECRET_KEY});
  }catch(e){
+     console.log(e);
     return false
  }
 }

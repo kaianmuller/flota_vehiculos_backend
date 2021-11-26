@@ -1,4 +1,4 @@
 export enum TipoPeriodoAgendamiento {
-    DIAS = 'DIAS',
-    KILOMENTROS = 'KILOMENTROS'
+  DIAS = 'DIAS',
+  KILOMENTROS = 'KILOMETROS',
 }

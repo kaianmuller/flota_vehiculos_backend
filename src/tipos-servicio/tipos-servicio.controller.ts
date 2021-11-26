@@ -20,6 +20,15 @@ async getCount(@Query() query:any){
 }
 
 
+@Get('existTipoByDescripcion/:desc')
+async existTipoByDescripcion(@Param('desc') desc:string) {
+    if(await this.service.getTipoByDescripcion(desc)){
+       return true; 
+    }
+
+    return false;
+}
+
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Get()

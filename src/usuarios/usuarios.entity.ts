@@ -1,13 +1,11 @@
-import { TipoUsuario } from "src/enums/tipo-usuario.enum";
-import { BeforeInsert, BeforeUpdate, Column, Entity, Exclusion, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import * as bcrypt from "bcrypt";
-import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
-import { classToPlain, Exclude, Type } from "class-transformer";
-import { Servicios } from "src/servicios/servicios.entity";
-import { ApiProperty } from "@nestjs/swagger";
+import { Exclude, classToPlain } from "class-transformer";
 import { Agendamientos } from "src/agendamientos/agendamientos.entity";
+import { TipoUsuario } from "src/enums/tipo-usuario.enum";
+import { Servicios } from "src/servicios/servicios.entity";
+import { EntityGeneric } from "src/shared/generic/entity-generic.entity";
 import { Utils } from "src/shared/utils/Utils";
-import { Console } from "console";
+import { Entity, Column, OneToMany, BeforeInsert, BeforeUpdate } from "typeorm";
+import * as bcrypt from "bcrypt";
 
 
 
@@ -48,7 +46,7 @@ export class Usuarios extends EntityGeneric{
      @BeforeInsert()
      @BeforeUpdate()
       async toUpperCase(){
-         Utils.convertToUpperCase(this);
+         Utils.convertToFormat(this);
       }
 
      async validarPassword(password:string){

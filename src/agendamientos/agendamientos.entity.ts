@@ -41,7 +41,7 @@ usuario:Usuarios;
 @BeforeInsert()
 @BeforeUpdate()
  async toUpperCase(){
-    Utils.convertToUpperCase(this);
+    Utils.convertToFormat(this);
  }
 
 }
