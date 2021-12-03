@@ -22,5 +22,6 @@ export class TiposServicio extends EntityGeneric{
     @BeforeUpdate()
      async toUpperCase(){
         Utils.convertToFormat(this);
+        this.id?this.fecha_alteracion = Utils.getDateNow():this.fecha_creacion = Utils.getDateNow();
      }
 }

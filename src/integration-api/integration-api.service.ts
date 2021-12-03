@@ -23,13 +23,13 @@ export class IntegrationApiService {
   infoApi() {
     return {
       host: 'https://api-users-datapar.herokuapp.com',
-      security: false,
-      user: { login: 'bm1', password: 'bm1' },
+      security: true,
+      auth: { key:"apidatuser"},
       config: {
-        ref: 'username',
+        ref: 'login_usuario',
         convert: {
-          login: 'username',
-          nombre: 'nombre',
+          login: 'login_usuario',
+          nombre: 'nombre_usuario',
         },
       },
     };
@@ -42,7 +42,7 @@ export class IntegrationApiService {
     if (this.infoApi().security) {
       this.getToken().subscribe({
         next: (v: any) => {
-          this.getDataFromApi(v.data.access_token).subscribe({
+          this.getDataFromApi(v.data.token).subscribe({
             next: (v: any) => this.verifyData(v.data),
             error: () => this.writeInLine('Error al traer los datos!'),
           });
@@ -64,9 +64,8 @@ export class IntegrationApiService {
   }
 
   getToken(): Observable<AxiosResponse<any[]>> {
-    return this.http.post(
-      'http://' + this.infoApi().host + '/login',
-      this.infoApi().user,
+    return this.http.post(this.infoApi().host + '/auth',
+      this.infoApi().auth,
     );
   }
 

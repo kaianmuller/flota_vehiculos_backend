@@ -1,5 +1,6 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Post, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './login.dto';
 
@@ -13,13 +14,10 @@ export class AuthController {
 
 @Post('login')
 async login(@Body() loginDto:LoginDto){
+
     const {login,contrasena} = loginDto;
-    let valido = null;
-    if(login && contrasena){
-    valido = await this.authServ.validarUsuario(login,contrasena);
-    }else{
-    valido = null;   
-    }
+    
+    const valido =  await this.authServ.validarUsuario(login,contrasena).catch(()=>false);
 
     if(!valido){
         throw new UnauthorizedException("No es un usuario valido!");
@@ -29,6 +27,8 @@ async login(@Body() loginDto:LoginDto){
 }
 
 
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @Post('check')
 async checkToken(@Body() token:any){
 return await this.authServ.checkToken(token);

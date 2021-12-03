@@ -25,7 +25,7 @@ export class Servicios extends EntityGeneric{
     @Column({nullable:true})
     km_final:number;
 
-    @Column()
+    @Column({nullable:true})
     valor_servicio:number;
 
     @Column()
@@ -47,6 +47,7 @@ export class Servicios extends EntityGeneric{
     @BeforeUpdate()
      async toUpperCase(){
         Utils.convertToFormat(this);
+        this.id?this.fecha_alteracion = Utils.getDateNow():this.fecha_creacion = Utils.getDateNow();
      }
     
 }

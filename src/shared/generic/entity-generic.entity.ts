@@ -7,7 +7,7 @@ export class EntityGeneric{
     @PrimaryGeneratedColumn()
     id:number;
 
-    @Column()
+    @Column({nullable:true})
     fecha_creacion:Date;
 
     @Column({nullable:true})

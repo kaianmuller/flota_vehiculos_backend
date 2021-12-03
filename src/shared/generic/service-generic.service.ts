@@ -107,7 +107,6 @@ constructor(readonly repository:Repository<E>){
             }else{
                     //procesar el grupo de alias
 
-
                 let alias:{[key:string]:any} = {};
                 for(let ke in jsonSearch[key]){
                     alias[jsonSearch[key][ke].alias] = {search:{},options:{}};

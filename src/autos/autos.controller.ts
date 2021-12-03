@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UnauthorizedException, UseGuards, Headers } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { AuthService } from 'src/auth/auth.service';
 import { AutosDto } from './autos.dto';
 import { Autos } from './autos.entity';
 import { AutosService } from './autos.service';
@@ -10,7 +11,7 @@ import { AutosService } from './autos.service';
 @Controller('autos')
 export class AutosController{
 
-    constructor(private readonly service:AutosService){
+    constructor(private readonly service:AutosService,private authServ:AuthService){
     }
     
 
@@ -56,7 +57,10 @@ async getOne(@Param('id') id:number){
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Post()
-async createOne(@Body() dto:AutosDto){
+async createOne(@Headers() headers:any,@Body() dto:AutosDto){
+    if(!(await this.authServ.isTokenAdmin(headers))){
+        throw new UnauthorizedException('Necesitas ser administrador!');
+    }
     return await this.service.createOne(dto);
 }
 
@@ -64,7 +68,10 @@ async createOne(@Body() dto:AutosDto){
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Put(':id')
-async editOne(@Param('id') id:number,@Body() dto:AutosDto){
+async editOne(@Headers() headers:any,@Param('id') id:number,@Body() dto:AutosDto){
+    if(!(await this.authServ.isTokenAdmin(headers))){
+        throw new UnauthorizedException('Necesitas ser administrador!');
+    }
     return await this.service.editOne(id,dto);
 }
 
@@ -72,7 +79,10 @@ async editOne(@Param('id') id:number,@Body() dto:AutosDto){
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Delete(':id')
-async deleteOne(@Param('id') id:number){
+async deleteOne(@Headers() headers:any,@Param('id') id:number){
+    if(!(await this.authServ.isTokenAdmin(headers))){
+        throw new UnauthorizedException('Necesitas ser administrador!');
+    }
     return await this.service.deleteOne(id); 
 }
     

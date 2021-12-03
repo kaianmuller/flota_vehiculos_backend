@@ -5,11 +5,7 @@ export class Utils{
 
   
     static isEmpty(obj:any){
-
-      if(obj && Object.values(obj).length !== 0){
-        return false;
-      }
-      return true;
+      return !(obj && Object.values(obj).length !== 0);
     }
 
     static convertToFormat(context:any){
@@ -24,8 +20,13 @@ export class Utils{
 
 
   static getDateNow(){
-    let fecha = new Date()
-    fecha.setMinutes(fecha.getMinutes() - fecha.getTimezoneOffset());
+    let fecha = new Date();
+    return new Date(fecha.setMinutes(fecha.getMinutes() - fecha.getTimezoneOffset()));
+  }
+
+
+  static getAuthorizationToken(headers:any){
+  return headers.authorization.split(" ")[1];
   }
 
 

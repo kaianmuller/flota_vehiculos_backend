@@ -23,18 +23,4 @@ export class AutosService extends ServiceGeneric<Autos,AutosDto>{
     }
 
 
-    async getSearch(){
-        let dateI = "2021-11-05";
-        let dateS = "2021-11-24";
-        console.log('inferior: '+dateI);
-        console.log('superior: ' +dateS);
-        let word = 'au';
-        return this.repository.find({descripcion:Like('%'+word.toUpperCase()+'%'),kilometraje:this.selectTypeFind(),fecha_alteracion:Between(dateI,dateS)});
-    }
-
-
-    selectTypeFind(){
-        return MoreThan(70);
-    }
-
 }

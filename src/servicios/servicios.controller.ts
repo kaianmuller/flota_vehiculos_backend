@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UnauthorizedException, UseGuards, Headers, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { AuthService } from 'src/auth/auth.service';
 import { ServiciosDto } from './servicios.dto';
 import { Servicios } from './servicios.entity';
 import { ServiciosService } from './servicios.service';
@@ -11,7 +12,7 @@ import { ServiciosService } from './servicios.service';
 export class ServiciosController{
 
 
-    constructor(private readonly service:ServiciosService){}
+    constructor(private readonly service:ServiciosService,private authServ:AuthService){}
     
 
     @Get('test')
@@ -47,7 +48,10 @@ async getOne(@Param('id') id:number){
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Post()
-async createOne(@Body() dto:ServiciosDto){
+async createOne(@Headers() headers:any,@Body() dto:ServiciosDto){
+    if(!(await this.authServ.isTokenAdmin(headers))){
+        throw new UnauthorizedException('Necesitas ser administrador!');
+    }
     return await this.service.createOne(dto);
 }
 
@@ -55,7 +59,10 @@ async createOne(@Body() dto:ServiciosDto){
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Put(':id')
-async editOne(@Param('id') id:number,@Body() dto:ServiciosDto){
+async editOne(@Headers() headers:any,@Param('id') id:number,@Body() dto:ServiciosDto){
+    if(!(await this.authServ.isTokenAdmin(headers))){
+        throw new UnauthorizedException('Necesitas ser administrador!');
+    }
     return await this.service.editOne(id,dto);
 }
 
@@ -63,7 +70,10 @@ async editOne(@Param('id') id:number,@Body() dto:ServiciosDto){
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Delete(':id')
-async deleteOne(@Param('id') id:number){
+async deleteOne(@Headers() headers:any,@Param('id') id:number){
+    if(!(await this.authServ.isTokenAdmin(headers))){
+        throw new UnauthorizedException('Necesitas ser administrador!');
+    }
     return await this.service.deleteOne(id); 
 }
 

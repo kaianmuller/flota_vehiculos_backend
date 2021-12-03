@@ -1,17 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards, Headers, UnauthorizedException, NotFoundException} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { AuthService } from 'src/auth/auth.service';
 import { ChangeUserPassDto } from './change-user-pass.dto';
 import { UsuariosDto } from './usuarios.dto';
-import { Usuarios } from './usuarios.entity';
 import { UsuariosService } from './usuarios.service';
-
 
 @ApiTags('Usuarios')
 @Controller('usuarios')
 export class UsuariosController{
 
-    constructor(private service:UsuariosService){}
+    constructor(private service:UsuariosService,private authServ:AuthService){}
 
 
 
@@ -24,14 +23,11 @@ async changePassword(@Body() dto:ChangeUserPassDto) {
 }
 
 
-
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @Get('existUserByLogin/:login')
 async existUserByLogin(@Param('login') login:string) {
-    if(await this.service.getUsuarioByLogin(login)){
-       return true; 
-    }
-
-    return false;
+    return await this.service.getUsuarioByLogin(login);
 }
 
 
@@ -58,9 +54,13 @@ async getOne(@Param('id') id:number){
 }
 
 
-
+@ApiBearerAuth()
+@UseGuards(AuthGuard('jwt'))
 @Post()
-async createOne(@Body() dto:UsuariosDto){
+async createOne(@Headers() headers:any,@Body() dto:UsuariosDto){
+    if(!(await this.authServ.isTokenAdmin(headers))){
+        throw new UnauthorizedException('Necesitas ser administrador!');
+    }
     return await this.service.createOne(dto);
 }
 
@@ -68,7 +68,10 @@ async createOne(@Body() dto:UsuariosDto){
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Put(':id')
-async editOne(@Param('id') id:number,@Body() dto:UsuariosDto){
+async editOne(@Headers() headers:any,@Param('id') id:number,@Body() dto:UsuariosDto){
+    if(!(await this.authServ.isTokenAdmin(headers))){
+        throw new UnauthorizedException('Necesitas ser administrador!');
+    }
     return await this.service.editOne(id,dto);
 }
 
@@ -76,10 +79,12 @@ async editOne(@Param('id') id:number,@Body() dto:UsuariosDto){
 @ApiBearerAuth()
 @UseGuards(AuthGuard('jwt'))
 @Delete(':id')
-async deleteOne(@Param('id') id:number){
-    return await this.service.deleteOne(id); 
+async deleteOne(@Headers() headers:any,@Param('id') id:number){ 
+    if(!(await this.authServ.isTokenAdmin(headers))){
+        throw new UnauthorizedException('Necesitas ser administrador!');
+    }
+    return await this.service.deleteOne(id);
 }
-
 
 
 
