@@ -14,20 +14,4 @@ export class ServiciosService extends ServiceGeneric<Servicios, ServiciosDto> {
     super(repository);
   }
 
-  async getTest() {
-    return await this.repository.find({
-      join: {
-        alias: 's',
-        leftJoinAndSelect: {
-          auto: 's.auto',
-          usuario: 's.usuario',
-          tipo_servicio: 's.tipo_servicio',
-        },
-      },
-      where: [
-        { auto: { chapa: 'A3', disponibilidad: 'DISPONIBLE' } },
-        { auto: { modelo: 'A3', disponibilidad: 'DISPONIBLE' } },
-      ],
-    });
-  }
 }

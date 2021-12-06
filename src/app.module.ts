@@ -10,6 +10,7 @@ import { ServiciosModule } from './servicios/servicios.module';
 import { AgendamientosModule } from './agendamientos/agendamientos.module';
 import { TiposServicioModule } from './tipos-servicio/tipos-servicio.module';
 import { IntegrationApiModule } from './integration-api/integration-api.module';
+import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { IntegrationApiModule } from './integration-api/integration-api.module';
   AuthModule,
   AgendamientosModule,
   TiposServicioModule,
-  IntegrationApiModule
+  IntegrationApiModule,
+  ReportModule
   ],
   controllers: [AppController],
   providers: [AppService],

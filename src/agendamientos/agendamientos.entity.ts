@@ -42,7 +42,7 @@ usuario:Usuarios;
 @BeforeUpdate()
  async toUpperCase(){
     Utils.convertToFormat(this);
-    this.id?this.fecha_alteracion = Utils.getDateNow():this.fecha_creacion = Utils.getDateNow();
+    this.id?this.fecha_alteracion = Utils.getDate():this.fecha_creacion = Utils.getDate();
  }
 
 }

@@ -1,6 +1,8 @@
 import { All, Injectable, NotFoundException } from "@nestjs/common";
+import * as moment from "moment";
 import { Any, Between, ILike, In, LessThanOrEqual, Like, MoreThanOrEqual, Not, Repository } from "typeorm";
 import { Utils } from "../utils/Utils";
+
 
 @Injectable()
 export class ServiceGeneric <E,EDto>{
@@ -78,13 +80,16 @@ constructor(readonly repository:Repository<E>){
 
         let jsonSearch:{[key:string]:any} = {};
 
-        if(query.search){
+        if(query.search && typeof query.search == 'string'){
         try {
             jsonSearch = JSON.parse(query.search);
         } catch (error) {
            console.log(error); 
         }
+        }else{
+            jsonSearch = query.search;
         }
+
 
 
     for(let key in jsonSearch){  // procesar el grupo principal sin los alias
@@ -169,7 +174,7 @@ if(queryAlias.length > 0){
 
 
 
-  // console.log(queryOR);
+  //console.log(queryOR);
 
         return queryOR;
     }

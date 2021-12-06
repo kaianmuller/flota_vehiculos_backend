@@ -47,7 +47,7 @@ export class Usuarios extends EntityGeneric{
      @BeforeUpdate()
       async toUpperCase(){
          Utils.convertToFormat(this);
-         this.id?this.fecha_alteracion = Utils.getDateNow():this.fecha_creacion = Utils.getDateNow();
+         this.id?this.fecha_alteracion = Utils.getDate():this.fecha_creacion = Utils.getDate();
       }
 
      async validarPassword(password:string){
